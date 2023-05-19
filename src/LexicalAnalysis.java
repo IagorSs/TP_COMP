@@ -215,7 +215,7 @@ public class LexicalAnalysis {
 
                 case 11:
                     lexeme.token += (char) fileChar;
-                    lexeme.type = TokenType.TKN_LITERAL_CHAR;
+                    lexeme.type = TokenType.TKN_CHAR_VAL;
 
                     state = 12;
                     returnLexema = true;

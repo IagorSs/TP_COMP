@@ -11,6 +11,8 @@ public enum TokenType {
 
     TKN_OPEN_PAR,      // (
     TKN_CLOSE_PAR,     // )
+    TKN_OPEN_KEY,      // {
+    TKN_CLOSE_KEY,      // }
 
     TKN_SINGLE_QUOTE,  // '
 
@@ -60,6 +62,6 @@ public enum TokenType {
     // LITERALS
     TKN_INT_VAL,
     TKN_FLOAT_VAL,
-    TKN_STRING,
-    TKN_LITERAL_CHAR
+    TKN_CHAR_VAL,
+    TKN_STRING
 }

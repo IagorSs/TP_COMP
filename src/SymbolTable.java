@@ -9,6 +9,8 @@ public class SymbolTable {
 
             put("(", TokenType.TKN_OPEN_PAR);
             put(")", TokenType.TKN_CLOSE_PAR);
+            put("{", TokenType.TKN_OPEN_KEY);
+            put("}", TokenType.TKN_CLOSE_KEY);
 
             put("'", TokenType.TKN_SINGLE_QUOTE);
 
