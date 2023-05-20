@@ -145,6 +145,7 @@ public class LexicalAnalysis {
                     if (fileChar == '*') {
                         state = 7;
                     } else {
+                        unread(fileChar);
                         state = 2;
                     }
 
