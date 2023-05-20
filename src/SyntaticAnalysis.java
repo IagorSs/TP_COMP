@@ -13,19 +13,17 @@ public class SyntaticAnalysis {
         this.currentLexeme = lexicalAnalysis.getNextLexeme();
     }
 
-    private static void error(TokenType expected, TokenType getted) {
-        // TODO throw specific Exception
-        throw new RuntimeException("Unexpected Lexeme. Expecting '" + expected.toString() + "' and get '" + getted.toString() + "'");
+    private void error(TokenType expected) {
+        System.out.println("ERROR: Unexpected Lexeme. Expecting '" + expected.toString() + "' and get '" + currentLexeme.type.toString() + "' on line " + lexicalAnalysis.getLine());
     }
 
-    private static void error(TokenType getted) {
-        // TODO throw specific Exception
-        throw new RuntimeException("Unexpected Lexeme. Get '" + getted.toString() + "'");
+    private void error() {
+        System.out.println("ERROR: Unexpected Lexeme. Get '" + currentLexeme.type.toString() + "' on line " + lexicalAnalysis.getLine());
     }
 
     private void eat(TokenType t) {
         if (currentLexeme.type == t) advance();
-        else error(t, currentLexeme.type);
+        else error(t);
     }
 
     public void analyseProduction() {
@@ -88,7 +86,7 @@ public class SyntaticAnalysis {
             case TKN_INT -> eat(TokenType.TKN_INT);
             case TKN_FLOAT -> eat(TokenType.TKN_FLOAT);
             case TKN_CHAR -> eat(TokenType.TKN_CHAR);
-            default -> SyntaticAnalysis.error(this.currentLexeme.type);
+            default -> error();
         }
     }
 
@@ -116,7 +114,7 @@ public class SyntaticAnalysis {
             case TKN_REPEAT -> repeatStmt();
             case TKN_READ -> readStmt();
             case TKN_WRITE -> writeStmt();
-            default -> error(this.currentLexeme.type);
+            default -> error();
         }
     }
 
@@ -315,23 +313,14 @@ public class SyntaticAnalysis {
     //              | "(" expression ")"
     private void factor() {
         switch (this.currentLexeme.type) {
-            case TKN_ID:
-                eat(TokenType.TKN_ID);
-                break;
-
-            case TKN_INT_VAL, TKN_FLOAT_VAL, TKN_CHAR:
-                constant();
-                break;
-
-            case TKN_OPEN_PAR:
+            case TKN_ID -> eat(TokenType.TKN_ID);
+            case TKN_INT_VAL, TKN_FLOAT_VAL, TKN_CHAR -> constant();
+            case TKN_OPEN_PAR -> {
                 eat(TokenType.TKN_OPEN_PAR);
                 expression();
                 eat(TokenType.TKN_CLOSE_PAR);
-                break;
-
-            default:
-                error(this.currentLexeme.type);
-                break;
+            }
+            default -> error();
         }
     }
 
@@ -349,7 +338,7 @@ public class SyntaticAnalysis {
             case TKN_LOWER -> eat(TokenType.TKN_LOWER);
             case TKN_LOWER_EQ -> eat(TokenType.TKN_LOWER_EQ);
             case TKN_NOT_EQUAL -> eat(TokenType.TKN_NOT_EQUAL);
-            default -> error(this.currentLexeme.type);
+            default -> error();
         }
     }
 
@@ -361,7 +350,7 @@ public class SyntaticAnalysis {
             case TKN_ADD -> eat(TokenType.TKN_ADD);
             case TKN_SUB -> eat(TokenType.TKN_SUB);
             case TKN_OR -> eat(TokenType.TKN_OR);
-            default -> error(this.currentLexeme.type);
+            default -> error();
         }
     }
 
@@ -373,7 +362,7 @@ public class SyntaticAnalysis {
             case TKN_MUL -> eat(TokenType.TKN_MUL);
             case TKN_DIV -> eat(TokenType.TKN_DIV);
             case TKN_AND -> eat(TokenType.TKN_AND);
-            default -> error(this.currentLexeme.type);
+            default -> error();
         }
     }
 
@@ -385,7 +374,7 @@ public class SyntaticAnalysis {
             case TKN_INT_VAL -> eat(TokenType.TKN_INT_VAL);
             case TKN_FLOAT_VAL -> eat(TokenType.TKN_FLOAT_VAL);
             case TKN_CHAR_VAL -> eat(TokenType.TKN_CHAR_VAL);
-            default -> error(this.currentLexeme.type);
+            default -> error();
         }
     }
 
