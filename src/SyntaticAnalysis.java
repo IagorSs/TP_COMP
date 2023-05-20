@@ -223,7 +223,7 @@ public class SyntaticAnalysis {
         expression_();
     }
 
-    // expression’ ::= relop simple-expr
+    // expression’ ::= relop expression
     //	                | λ
     private void expression_() {
         ArrayList<TokenType> relopFirst = new ArrayList<>(){
@@ -240,7 +240,7 @@ public class SyntaticAnalysis {
         if (relopFirst.contains(this.currentLexeme.type)) {
             relop();
 
-            simpleExpr();
+            expression();
         }
     }
 
@@ -314,7 +314,7 @@ public class SyntaticAnalysis {
     private void factor() {
         switch (this.currentLexeme.type) {
             case TKN_ID -> eat(TokenType.TKN_ID);
-            case TKN_INT_VAL, TKN_FLOAT_VAL, TKN_CHAR -> constant();
+            case TKN_INT_VAL, TKN_FLOAT_VAL, TKN_SINGLE_QUOTE -> constant();
             case TKN_OPEN_PAR -> {
                 eat(TokenType.TKN_OPEN_PAR);
                 expression();
@@ -373,7 +373,11 @@ public class SyntaticAnalysis {
         switch (this.currentLexeme.type) {
             case TKN_INT_VAL -> eat(TokenType.TKN_INT_VAL);
             case TKN_FLOAT_VAL -> eat(TokenType.TKN_FLOAT_VAL);
-            case TKN_CHAR_VAL -> eat(TokenType.TKN_CHAR_VAL);
+            case TKN_SINGLE_QUOTE -> {
+                eat(TokenType.TKN_SINGLE_QUOTE);
+                eat(TokenType.TKN_CHAR_VAL);
+                eat(TokenType.TKN_SINGLE_QUOTE);
+            }
             default -> error();
         }
     }
