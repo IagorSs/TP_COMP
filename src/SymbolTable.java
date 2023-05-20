@@ -55,7 +55,7 @@ public class SymbolTable {
         }
     };
 
-    public TokenType getAssociatedTokenType(String token) {
-        return symbolTable.getOrDefault(token, TokenType.TKN_ID);
+    public TokenType getAssociatedTokenTypeOrSaveId(String token) {
+        return symbolTable.computeIfAbsent(token, (val) -> TokenType.TKN_ID);
     }
 }

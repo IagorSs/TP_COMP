@@ -259,7 +259,7 @@ public class LexicalAnalysis {
             }
         }
 
-        if (state == 2 || state == 11 || state == 13) lexeme.type = symbolTable.getAssociatedTokenType(lexeme.token);
+        if (state == 2 || state == 11 || state == 13) lexeme.type = symbolTable.getAssociatedTokenTypeOrSaveId(lexeme.token);
 
         if (state == 2 || state == 17) state = 1;
 
